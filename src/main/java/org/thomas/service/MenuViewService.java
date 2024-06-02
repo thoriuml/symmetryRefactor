@@ -1,6 +1,8 @@
 package org.thomas.service;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.thomas.driver.LiquidCrystal;
 import org.thomas.enums.MenuIcon;
 import org.thomas.enums.MenuItem;
@@ -8,10 +10,12 @@ import org.thomas.enums.MenuItem;
 import java.util.List;
 
 
-//Commentary: extracted out the logic that writes to screen to its own class
-//This service provided menu items and arrow icons will print them to the corresponding positions on the screen
-public class MenuViewService {
+// Commentary: extracted out the logic that writes to screen to its own class
 
+// This service provided menu items and arrow icons will print them to the corresponding positions on the screen
+// Menu items are printed one for each row starting from the provided starting position
+public class MenuViewService {
+    private static final Logger logger = LogManager.getLogger(MenuViewService.class);
     private final LiquidCrystal liquidCrystal;
     private final int itemsPerPage;
     private final List<MenuItem> menuItems;
@@ -40,6 +44,7 @@ public class MenuViewService {
     // and up and down arrows based on the currentPage number
     public void drawMainMenu(int currentPage) {
         liquidCrystal.clear();
+        logger.info("Drawing main menu for page {}", currentPage);
         printMenuText(currentPage);
         printArrows(currentPage);
     }

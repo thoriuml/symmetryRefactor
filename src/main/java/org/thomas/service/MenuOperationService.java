@@ -1,6 +1,8 @@
 package org.thomas.service;
 
 import com.google.common.collect.ImmutableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.thomas.enums.MenuButton;
 import org.thomas.utils.CommonUtils;
 
@@ -8,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MenuOperationService {
+    private static final Logger logger = LogManager.getLogger(MenuOperationService.class);
     private final MenuViewService menuViewService;
     private final List<MenuButton> menuButtons;
     private final int pinInputSource;
@@ -28,6 +31,7 @@ public class MenuOperationService {
     private MenuButton evaluateButton(int voltage) {
         for (MenuButton button : menuButtons) {
             if (voltage < button.voltageMaxExclusive) {
+                logger.info("Button voltage {} in range for button {}", voltage, button);
                 return button;
             }
         }
@@ -55,6 +59,7 @@ public class MenuOperationService {
                     return currentPage;
             }
         } while (button == MenuButton.IDLE);
+        logger.info("Menu operation result: {}", currentPage);
         return currentPage;
     }
 }

@@ -3,6 +3,8 @@ package org.thomas;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.thomas.enums.MenuButton;
 import org.thomas.service.MenuOperationService;
 import org.thomas.service.MenuViewService;
@@ -19,6 +21,7 @@ import java.util.Properties;
 /* As discussed with James over emails, included commentary on the rationale behind some of the changes */
 
 public class LiquidCrystalMenu {
+    private static final Logger logger = LogManager.getLogger(LiquidCrystalMenu.class);
     private static LiquidCrystal liquidCrystal;
     //Commentary: extracting a bunch of magic numbers to constants to make it easier to read
     private static MenuOperationService menuOperationService;
@@ -33,8 +36,7 @@ public class LiquidCrystalMenu {
     private static final int MAX_PAGES = CommonUtils.round(((double) MenuItem.values().length / ITEMS_PER_PAGE) + .5);
 
     /* Commentary: not ideal to have this as static and global because it is not actually static,
-     can avoid this by putting the loop() methods and variables into a separate class and instantiating
-     them in main() but we cannot modify main()... */
+     can avoid this by putting the loop() methods and variables into a separate class but we need to maintain loop's signature*/
     private static int currentPage = 0;
 
     //Commentary: having immutable list instead of using MenuItems.values() so future additional MenuItems and MenuIcons won't change existing behaviour
@@ -51,7 +53,8 @@ public class LiquidCrystalMenu {
 
     private static void setup() throws IOException {
         /* Commentary: extracting the parameters for liquidCrystal into properties so that future changes to
-        the init doesn't risk changing the code */
+        the init doesn't have to change the code */
+        logger.info("Setting up liquidCrystal");
         Properties properties = PropertiesLoader.loadProperties();
         liquidCrystal = new LiquidCrystal(
                 PropertiesLoader.getIntValue(properties, ("liquidCrystal.init.pinNumRS")),
@@ -62,6 +65,7 @@ public class LiquidCrystalMenu {
                 PropertiesLoader.getIntValue(properties, ("liquidCrystal.init.pinNumD7")));
 
         // Commentary: extracted logic for drawing to the screen and menu operations to their own classes
+
         // Providing the parameters and resources to draw the menu
         menuViewService = new MenuViewService(liquidCrystal, ITEMS_PER_PAGE, MENU_ITEMS,
                 MENU_TOP_POS, UP_ARROW_POS, DOWN_ARROW_POS, MAX_PAGES, MenuIcon.UP_ARROW, MenuIcon.DOWN_ARROW);
@@ -72,6 +76,7 @@ public class LiquidCrystalMenu {
     }
 
     private static void initMenu() { // Init screen
+        logger.info("Initializing screen");
         liquidCrystal.begin(VIEW_COLS, VIEW_ROWS);
         liquidCrystal.createChar(MenuIcon.UP_ARROW.id, MenuIcon.UP_ARROW.definition);
         liquidCrystal.createChar(MenuIcon.DOWN_ARROW.id, MenuIcon.DOWN_ARROW.definition);
