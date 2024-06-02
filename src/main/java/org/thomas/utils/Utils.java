@@ -34,4 +34,10 @@ public class Utils {
     public static int analogRead(int pinNum) {
         return -1;
     }
+
+    //Commentary: moved from the main class
+    // Helper method for this to calculate and return max no of pages
+    public static int resolveMaxPages(int menuSize, int itemsPerPage) {
+        return Utils.round(((double) menuSize / itemsPerPage) + .5);
+    }
 }
