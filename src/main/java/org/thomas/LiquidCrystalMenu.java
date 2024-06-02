@@ -66,7 +66,7 @@ public class LiquidCrystalMenu {
         // Commentary: extracted logic for drawing to the screen and menu operations to their own classes
 
         // Providing the parameters and resources to draw the menu
-        int maxPages = resolveMaxPages();
+        int maxPages = Utils.resolveMaxPages(MENU_ITEMS.size(), ITEMS_PER_PAGE);
         menuViewService = new MenuViewService(liquidCrystal, ITEMS_PER_PAGE, MENU_ITEMS,
                 MENU_TOP_POS, UP_ARROW_POS, DOWN_ARROW_POS, maxPages, MenuIcon.UP_ARROW, MenuIcon.DOWN_ARROW);
 
@@ -85,9 +85,5 @@ public class LiquidCrystalMenu {
     private static void loop() {
         menuViewService.drawMainMenu(currentPage);
         currentPage = menuOperationService.operateMainMenu(currentPage); //update currentPage with the result of button operation
-    }
-
-    private static int resolveMaxPages() { //helper method for this class to calculate and return max no of pages
-        return Utils.round(((double) MENU_ITEMS.size() / ITEMS_PER_PAGE) + .5);
     }
 }
