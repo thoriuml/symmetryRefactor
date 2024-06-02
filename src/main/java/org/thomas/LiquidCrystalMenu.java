@@ -9,7 +9,7 @@ import org.thomas.enums.MenuButton;
 import org.thomas.service.MenuOperationService;
 import org.thomas.service.MenuViewService;
 import org.thomas.utils.PropertiesLoader;
-import org.thomas.utils.CommonUtils;
+import org.thomas.utils.Utils;
 import org.thomas.driver.LiquidCrystal;
 import org.thomas.enums.MenuIcon;
 import org.thomas.enums.MenuItem;
@@ -33,7 +33,6 @@ public class LiquidCrystalMenu {
     private static final ImmutablePair<Integer, Integer> UP_ARROW_POS = new ImmutablePair<>(15, 0); //up and down arrows position
     private static final ImmutablePair<Integer, Integer> DOWN_ARROW_POS = new ImmutablePair<>(15, 1);
     private static final ImmutablePair<Integer, Integer> MENU_TOP_POS = new ImmutablePair<>(1, 0); //starting print position for menu items
-    private static final int MAX_PAGES = CommonUtils.round(((double) MenuItem.values().length / ITEMS_PER_PAGE) + .5);
 
     /* Commentary: not ideal to have this as static and global because it is not actually static,
      can avoid this by putting the loop() methods and variables into a separate class but we need to maintain loop's signature*/
@@ -42,7 +41,7 @@ public class LiquidCrystalMenu {
     //Commentary: having immutable list instead of using MenuItems.values() so future additional MenuItems and MenuIcons won't change existing behaviour
     private static final List<MenuItem> MENU_ITEMS = ImmutableList.of(
             MenuItem.START_CAPTURE, MenuItem.START_SHOWCASE, MenuItem.PRESETS, MenuItem.SET_TRIGGER, MenuItem.SETTINGS, MenuItem.ABOUT);
-    private static final List<MenuButton> MENU_BUTTONS = ImmutableList.of(MenuButton.PAGE_UP, MenuButton.PAGE_DOWN);
+    private static final List<MenuButton> MENU_BUTTONS = ImmutableList.of(MenuButton.UP_ARROW, MenuButton.DOWN_ARROW);
 
     public static void main(String[] args) throws IOException {
         setup();
@@ -67,10 +66,11 @@ public class LiquidCrystalMenu {
         // Commentary: extracted logic for drawing to the screen and menu operations to their own classes
 
         // Providing the parameters and resources to draw the menu
+        int maxPages = resolveMaxPages();
         menuViewService = new MenuViewService(liquidCrystal, ITEMS_PER_PAGE, MENU_ITEMS,
-                MENU_TOP_POS, UP_ARROW_POS, DOWN_ARROW_POS, MAX_PAGES, MenuIcon.UP_ARROW, MenuIcon.DOWN_ARROW);
+                MENU_TOP_POS, UP_ARROW_POS, DOWN_ARROW_POS, maxPages, MenuIcon.UP_ARROW, MenuIcon.DOWN_ARROW);
 
-        menuOperationService = new MenuOperationService(menuViewService, MENU_BUTTONS, PIN_INPUT_SOURCE, MAX_PAGES);
+        menuOperationService = new MenuOperationService(menuViewService, MENU_BUTTONS, PIN_INPUT_SOURCE, maxPages);
 
         initMenu();
     }
@@ -85,5 +85,9 @@ public class LiquidCrystalMenu {
     private static void loop() {
         menuViewService.drawMainMenu(currentPage);
         currentPage = menuOperationService.operateMainMenu(currentPage); //update currentPage with the result of button operation
+    }
+
+    private static int resolveMaxPages() { //helper method for this class to calculate and return max no of pages
+        return Utils.round(((double) MENU_ITEMS.size() / ITEMS_PER_PAGE) + .5);
     }
 }

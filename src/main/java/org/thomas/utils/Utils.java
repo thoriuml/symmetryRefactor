@@ -1,6 +1,6 @@
 package org.thomas.utils;
 
-public class CommonUtils {
+public class Utils {
     //  ----------------------------------------------------------------------
     //  Maths (ish)
     public static int round(double x) {

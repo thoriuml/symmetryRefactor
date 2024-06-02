@@ -22,12 +22,12 @@ public class MenuViewService {
     private final ImmutablePair<Integer, Integer> menuTopPos;
     private final ImmutablePair<Integer, Integer> upArrowPos;
     private final ImmutablePair<Integer, Integer> downArrowPos;
-    private final int maxMenuPages;
+    private final int maxPages;
     private final MenuIcon upArrow;
     private final MenuIcon downArrow;
 
     public MenuViewService(LiquidCrystal liquidCrystal, int itemsPerPage, List<MenuItem> menuItems, ImmutablePair<Integer, Integer> menuTopPos,
-                           ImmutablePair<Integer, Integer> upArrowPos, ImmutablePair<Integer, Integer> downArrowPos, int maxMenuPages,
+                           ImmutablePair<Integer, Integer> upArrowPos, ImmutablePair<Integer, Integer> downArrowPos, int maxPages,
                            MenuIcon upArrow, MenuIcon downArrow) {
         this.liquidCrystal = liquidCrystal;
         this.itemsPerPage = itemsPerPage;
@@ -35,7 +35,7 @@ public class MenuViewService {
         this.menuTopPos = menuTopPos;
         this.upArrowPos = upArrowPos;
         this.downArrowPos = downArrowPos;
-        this.maxMenuPages = maxMenuPages;
+        this.maxPages = maxPages;
         this.upArrow = upArrow;
         this.downArrow = downArrow;
     }
@@ -62,11 +62,11 @@ public class MenuViewService {
     private void printArrows(int currentPage) {
         if (currentPage == 0) { // Prints down arrow only
             writeIconAtPosition(liquidCrystal, downArrow, downArrowPos.left, downArrowPos.right);
-        } else if (currentPage > 0 && currentPage < maxMenuPages) { // Prints both arrows
+        } else if (currentPage > 0 && currentPage < maxPages) { // Prints both arrows
             writeIconAtPosition(liquidCrystal, upArrow, upArrowPos.left, upArrowPos.right);
             writeIconAtPosition(liquidCrystal, downArrow, downArrowPos.left, downArrowPos.right);
-        } else if (currentPage == maxMenuPages) { // Prints up arrow only
-            writeIconAtPosition(liquidCrystal, downArrow, downArrowPos.left, downArrowPos.right);
+        } else if (currentPage == maxPages) { // Prints up arrow only
+            writeIconAtPosition(liquidCrystal, upArrow, upArrowPos.left, upArrowPos.right);
         }
     }
 

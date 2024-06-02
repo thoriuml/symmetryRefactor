@@ -1,9 +1,9 @@
 package org.thomas.enums;
 
 public enum MenuButton {
-    IDLE(Integer.MIN_VALUE), //placeholder value for idle state
-    PAGE_UP(50),
-    PAGE_DOWN(195);
+    IDLE(Integer.MAX_VALUE), //placeholder value for idle state
+    UP_ARROW(50),
+    DOWN_ARROW(195);
 
     public final int voltageMaxExclusive; // used to evaluate button pressed
 

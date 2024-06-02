@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.thomas.enums.MenuButton;
-import org.thomas.utils.CommonUtils;
+import org.thomas.utils.Utils;
 
 import java.util.Comparator;
 import java.util.List;
@@ -45,16 +45,16 @@ public class MenuOperationService {
     public int operateMainMenu(int currentPage) {
         MenuButton button;
         do { // Commentary: using do while loop instead, so we dont have to manage an additional flag
-            button = evaluateButton(CommonUtils.analogRead(pinInputSource)); // Read and evaluate the voltage drop from pinInputSource
+            button = evaluateButton(Utils.analogRead(pinInputSource)); // Read and evaluate the voltage drop from pinInputSource
             switch (button) {
                 case IDLE: // When button returns as idle there is no action taken
                     break; // Restart the while loop to wait for another button press
-                case PAGE_UP:
-                    currentPage = CommonUtils.constrain(currentPage - 1, maxPages);
+                case UP_ARROW:
+                    currentPage = Utils.constrain(currentPage - 1, maxPages);
                     menuViewService.drawMainMenu(currentPage); // Refresh main menu
                     return currentPage;
-                case PAGE_DOWN:
-                    currentPage = CommonUtils.constrain(currentPage + 1, maxPages);
+                case DOWN_ARROW:
+                    currentPage = Utils.constrain(currentPage + 1, maxPages);
                     menuViewService.drawMainMenu(currentPage);
                     return currentPage;
             }
