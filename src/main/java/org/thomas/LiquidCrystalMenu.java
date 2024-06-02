@@ -5,16 +5,15 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.thomas.driver.LiquidCrystal;
 import org.thomas.enums.MenuButton;
+import org.thomas.enums.MenuIcon;
+import org.thomas.enums.MenuItem;
 import org.thomas.service.MenuOperationService;
 import org.thomas.service.MenuViewService;
 import org.thomas.utils.PropertiesLoader;
 import org.thomas.utils.Utils;
-import org.thomas.driver.LiquidCrystal;
-import org.thomas.enums.MenuIcon;
-import org.thomas.enums.MenuItem;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -43,14 +42,14 @@ public class LiquidCrystalMenu {
             MenuItem.START_CAPTURE, MenuItem.START_SHOWCASE, MenuItem.PRESETS, MenuItem.SET_TRIGGER, MenuItem.SETTINGS, MenuItem.ABOUT);
     private static final List<MenuButton> MENU_BUTTONS = ImmutableList.of(MenuButton.UP_ARROW, MenuButton.DOWN_ARROW);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) { // Must not change
         setup();
         while (true) {
             loop();
         }
     }
 
-    private static void setup() throws IOException {
+    static void setup() { // Commentary: ideally this should be private, but opening this to bypass the limitation of the program's requirement so we can test this class
         /* Commentary: extracting the parameters for liquidCrystal into properties so that future changes to
         the init doesn't have to change the code */
         logger.info("Setting up liquidCrystal");
@@ -71,7 +70,6 @@ public class LiquidCrystalMenu {
                 MENU_TOP_POS, UP_ARROW_POS, DOWN_ARROW_POS, maxPages, MenuIcon.UP_ARROW, MenuIcon.DOWN_ARROW);
 
         menuOperationService = new MenuOperationService(menuViewService, MENU_BUTTONS, PIN_INPUT_SOURCE, maxPages);
-
         initMenu();
     }
 
@@ -82,7 +80,8 @@ public class LiquidCrystalMenu {
         liquidCrystal.createChar(MenuIcon.DOWN_ARROW.id, MenuIcon.DOWN_ARROW.definition);
     }
 
-    private static void loop() {
+    //Must keep method signature
+    static void loop() { // Commentary: ideally this should be private, but opening this to bypass the limitation of the program's requirement so we can test this class
         menuViewService.drawMainMenu(currentPage);
         currentPage = menuOperationService.operateMainMenu(currentPage); //update currentPage with the result of button operation
     }

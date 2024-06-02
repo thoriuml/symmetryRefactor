@@ -23,6 +23,7 @@ class MenuOperationServiceTest {
     private static final List<MenuButton> MENU_BUTTONS = ImmutableList.of(MenuButton.UP_ARROW, MenuButton.DOWN_ARROW);
     private static final int PIN_INPUT_SOURCE = 0; //pin to read button input from
     private static final int MAX_PAGES = 5;
+    @Mock
     private MockedStatic<Utils> utils;
 
 

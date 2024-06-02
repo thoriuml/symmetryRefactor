@@ -34,8 +34,7 @@ class MenuViewServiceTest {
     }
 
     @Test
-    public void test_draw_menu_first_page() {
-        //setup
+    void test_draw_menu_first_page() {
         //execute
         menuViewService.drawMainMenu(0);
         //verify
@@ -50,8 +49,7 @@ class MenuViewServiceTest {
     }
 
     @Test
-    public void test_draw_menu_second_page() {
-        //setup
+    void test_draw_menu_second_page() {
         //execute
         menuViewService.drawMainMenu(1);
         //verify
@@ -69,8 +67,7 @@ class MenuViewServiceTest {
     }
 
     @Test
-    public void test_draw_menu_last_page() {
-        //setup
+    void test_draw_menu_last_page() {
         //execute
         menuViewService.drawMainMenu(4);
         //verify

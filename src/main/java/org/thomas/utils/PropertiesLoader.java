@@ -3,8 +3,6 @@ package org.thomas.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -16,13 +14,13 @@ public class PropertiesLoader {
         throw new IllegalArgumentException("Utility class");
     }
 
-    public static Properties loadProperties() throws IOException {
+    public static Properties loadProperties(){
         Properties configuration = new Properties();
         try (InputStream inputStream = PropertiesLoader.class
                 .getClassLoader()
                 .getResourceAsStream(PROPERTIES_FILENAME)) {
             configuration.load(inputStream);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             logger.error("Could not load properties", e);
         }
         return configuration;
