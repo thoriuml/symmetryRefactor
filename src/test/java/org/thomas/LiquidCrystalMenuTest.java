@@ -1,5 +1,6 @@
 package org.thomas;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -35,6 +36,11 @@ class LiquidCrystalMenuTest {
         field = LiquidCrystalMenu.class.getDeclaredField("menuOperationService");
         field.setAccessible(true);
         field.set(null, menuOperationService);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        propertiesLoader.close();
     }
 
     @Test

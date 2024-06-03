@@ -1,6 +1,7 @@
 package org.thomas.service;
 
 import com.google.common.collect.ImmutableList;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -34,6 +35,11 @@ class MenuOperationServiceTest {
         utils = Mockito.mockStatic(Utils.class);
     }
 
+    @AfterEach
+    public void tearDown() {
+        utils.close();
+    }
+
     @Test
     void when_up_arrow_operateMainMenu_verify_calls() {
         //setup
@@ -45,7 +51,6 @@ class MenuOperationServiceTest {
         //verify
         assertEquals(0, result);
         Mockito.verify(menuViewService, times(1)).drawMainMenu(0);
-        utils.close();
     }
 
     @Test
@@ -61,6 +66,5 @@ class MenuOperationServiceTest {
         assertEquals(0, result);
         utils.verify(() -> Utils.analogRead(PIN_INPUT_SOURCE), times(2)); // should call again after initial call evaluated as idle
         Mockito.verify(menuViewService, times(1)).drawMainMenu(0);
-        utils.close();
     }
 }
