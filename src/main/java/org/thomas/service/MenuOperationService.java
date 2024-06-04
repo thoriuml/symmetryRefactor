@@ -52,11 +52,11 @@ public class MenuOperationService {
                 case UP_ARROW:
                     currentPage = Utils.constrain(currentPage - 1, maxPages);
                     menuViewService.drawMainMenu(currentPage); // Refresh main menu
-                    return currentPage;
+                    break;
                 case DOWN_ARROW:
                     currentPage = Utils.constrain(currentPage + 1, maxPages);
                     menuViewService.drawMainMenu(currentPage);
-                    return currentPage;
+                    break;
             }
         } while (button == MenuButton.IDLE);
         logger.info("Menu operation result: {}", currentPage);
