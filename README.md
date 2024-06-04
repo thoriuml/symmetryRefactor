@@ -1,6 +1,6 @@
 Part of the refactor challenge.<br />
 LiquidCrystalMenu.java being the main class<br />
-There are commentary on rationle of some of the changes in this format: <br />
+There are commentary on rationale of some of the changes in this format: <br />
 //Commentary : [comments]<br />
 
 Dependencies managed with maven <br /><br />
