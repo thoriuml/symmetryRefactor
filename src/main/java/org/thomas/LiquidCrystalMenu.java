@@ -49,7 +49,7 @@ public class LiquidCrystalMenu {
         }
     }
 
-    static void setup() { // Commentary: ideally this should be private, but opening this to bypass the limitation of the program's requirement so we can test this class
+    public static void setup() { // Commentary: ideally this should be private, but opening this to bypass the limitation of the program's requirement so we can test this class
         /* Commentary: extracting the parameters for liquidCrystal into properties so that future changes to
         the init doesn't have to change the code */
         logger.info("Setting up liquidCrystal");
@@ -81,7 +81,7 @@ public class LiquidCrystalMenu {
     }
 
     //Must keep method signature
-    static void loop() { // Commentary: ideally this should be private, but opening this to bypass the limitation of the program's requirement so we can test this class
+    public static void loop() { // Commentary: ideally this should be private, but opening this to bypass the limitation of the program's requirement so we can test this class
         menuViewService.drawMainMenu(currentPage);
         currentPage = menuOperationService.operateMainMenu(currentPage); //update currentPage with the result of button operation
     }
